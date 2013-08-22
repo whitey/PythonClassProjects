@@ -38,12 +38,45 @@ print_words() and print_top().
 """
 
 import sys
-
 # +++your code here+++
 # Define print_words(filename) and print_top(filename) functions.
 # You could write a helper utility function that reads a file
 # and builds and returns a word/count dict for it.
 # Then print_words() and print_top() can just call the utility function.
+
+
+# returns a dictionary of  [word] = occurence
+def words(filename):
+  file = open(filename, 'r')
+  count = {}
+  for line in file:
+    for word in line.split():
+      if word not in count.keys():
+        count[word] = 1
+      else:
+        count[word] += 1
+  return count
+
+def last(a):
+  return a[-1]
+
+def print_words(filename):
+  wordList = words(filename)
+  for word in wordList.keys():
+    print str(wordList[word]) + "\t" + word
+  return
+
+def print_top(filename):
+  count = words(filename)
+  topCount = []
+  for word in count.keys():
+    topCount.append([word, count[word]])
+  limit = 20
+  for item in sorted(topCount, key=last, reverse=True):
+    if limit > 0:
+      print str(item[1]) + "\t" + item[0] 
+    limit -= 1
+  return
 
 ###
 
