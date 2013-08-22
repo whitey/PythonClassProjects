@@ -52,7 +52,7 @@ def front_back(a, b):
   # +++your code here+++
   # if number%2==0:
   # 0 = Even
-  frontIndexA = 0
+  frontIndexA = 0 
   frontIndexB = 0
   
   if len(a)%2 != 0: frontIndexA = len(a)/2 + 1
