@@ -34,6 +34,35 @@ Suggested milestones for incremental development:
  -Fix main() to use the extract_names list
 """
 
+def isYear(line):
+  year = re.search(r'Popularity in ....',line)
+  if year: return year.group()
+
+def isBabyNames(line):
+  re1='.*?' # Non-greedy match on filler
+  re2='(\\d+)'  # Integer Number 1
+  re3='.*?' # Non-greedy match on filler
+  re4='(?:[a-z][a-z]+)' # Uninteresting: word
+  re5='.*?' # Non-greedy match on filler
+  re6='(?:[a-z][a-z]+)' # Uninteresting: word
+  re7='.*?' # Non-greedy match on filler
+  re8='((?:[a-z][a-z]+))' # Word 1
+  re9='.*?' # Non-greedy match on filler
+  re10='(?:[a-z][a-z]+)'  # Uninteresting: word
+  re11='.*?'  # Non-greedy match on filler
+  re12='(?:[a-z][a-z]+)'  # Uninteresting: word
+  re13='.*?'  # Non-greedy match on filler
+  re14='((?:[a-z][a-z]+))'  # Word 2
+
+  rg = re.compile(re1+re2+re3+re4+re5+re6+re7+re8+re9+re10+re11+re12+re13+re14,re.IGNORECASE|re.DOTALL)
+  m = rg.search(txt)
+  if m:
+    rank=m.group(1)
+    boyName=m.group(2)
+    girlName=m.group(3)
+
+
+
 def extract_names(filename):
   """
   Given a file name for baby.html, returns a list starting with the year string
@@ -41,6 +70,39 @@ def extract_names(filename):
   ['2006', 'Aaliyah 91', Aaron 57', 'Abagail 895', ' ...]
   """
   # +++your code here+++
+  file = open(filename, 'r')
+  for line in file:
+    year = re.search(r'Popularity in ....',line)
+
+    re1='.*?' # Non-greedy match on filler
+    #re2='(\\d+)'  # Rank
+    re2=([0-9][0-9][0-9]|1000) # Rank
+    re3='.*?' # Non-greedy match on filler
+    re4='(?:[a-z][a-z]+)' # Uninteresting: word
+    re5='.*?' # Non-greedy match on filler
+    re6='(?:[a-z][a-z]+)' # Uninteresting: word
+    re7='.*?' # Non-greedy match on filler
+    re8='((?:[a-z][a-z]+))' # Boy Name 1
+    re9='.*?' # Non-greedy match on filler
+    re10='(?:[a-z][a-z]+)'  # Uninteresting: word
+    re11='.*?'  # Non-greedy match on filler
+    re12='(?:[a-z][a-z]+)'  # Uninteresting: word
+    re13='.*?'  # Non-greedy match on filler
+    re14='((?:[a-z][a-z]+))'  # Girl Name 2
+
+    rg = re.compile(re1+re2+re3+re4+re5+re6+re7+re8+re9+re10+re11+re12+re13+re14,re.IGNORECASE|re.DOTALL)
+    m = rg.search(line)
+
+    #################
+    if year:
+      print year.group()
+    elif m:
+      rank = m.group(1)
+      boyName = m.group(2)
+      girlName = m.group(3)
+      print rank + " " + boyName + " " + girlName
+    #print line
+  file.close()
   return
 
 
@@ -63,6 +125,8 @@ def main():
   # +++your code here+++
   # For each filename, get the names, then either print the text output
   # or write it to a summary file
+
+  extract_names("baby1990.html")
   
 if __name__ == '__main__':
   main()
