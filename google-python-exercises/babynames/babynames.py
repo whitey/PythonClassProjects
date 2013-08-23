@@ -37,22 +37,23 @@ Suggested milestones for incremental development:
 def isYear(line):
   year = re.search(r'Popularity in ....',line)
   if year: return year.group()
+  else: False 
 
 def isBabyNames(line):
   re1='.*?' # Non-greedy match on filler
-  re2='(\\d+)'  # Integer Number 1
+  re2='([1-9][0-9]{0,2}|1000)' # Rank
   re3='.*?' # Non-greedy match on filler
   re4='(?:[a-z][a-z]+)' # Uninteresting: word
   re5='.*?' # Non-greedy match on filler
   re6='(?:[a-z][a-z]+)' # Uninteresting: word
   re7='.*?' # Non-greedy match on filler
-  re8='((?:[a-z][a-z]+))' # Word 1
+  re8='((?:[a-z][a-z]+))' # Boy Name 1
   re9='.*?' # Non-greedy match on filler
   re10='(?:[a-z][a-z]+)'  # Uninteresting: word
   re11='.*?'  # Non-greedy match on filler
   re12='(?:[a-z][a-z]+)'  # Uninteresting: word
   re13='.*?'  # Non-greedy match on filler
-  re14='((?:[a-z][a-z]+))'  # Word 2
+  re14='((?:[a-z][a-z]+))'  # Girl Name 2
 
   rg = re.compile(re1+re2+re3+re4+re5+re6+re7+re8+re9+re10+re11+re12+re13+re14,re.IGNORECASE|re.DOTALL)
   m = rg.search(txt)
@@ -60,6 +61,8 @@ def isBabyNames(line):
     rank=m.group(1)
     boyName=m.group(2)
     girlName=m.group(3)
+
+  return rank
 
 
 
@@ -72,36 +75,10 @@ def extract_names(filename):
   # +++your code here+++
   file = open(filename, 'r')
   for line in file:
-    year = re.search(r'Popularity in ....',line)
+    if isYear(line): 
+      print isYear(line)
+      break
 
-    re1='.*?' # Non-greedy match on filler
-    #re2='(\\d+)'  # Rank
-    re2=([0-9][0-9][0-9]|1000) # Rank
-    re3='.*?' # Non-greedy match on filler
-    re4='(?:[a-z][a-z]+)' # Uninteresting: word
-    re5='.*?' # Non-greedy match on filler
-    re6='(?:[a-z][a-z]+)' # Uninteresting: word
-    re7='.*?' # Non-greedy match on filler
-    re8='((?:[a-z][a-z]+))' # Boy Name 1
-    re9='.*?' # Non-greedy match on filler
-    re10='(?:[a-z][a-z]+)'  # Uninteresting: word
-    re11='.*?'  # Non-greedy match on filler
-    re12='(?:[a-z][a-z]+)'  # Uninteresting: word
-    re13='.*?'  # Non-greedy match on filler
-    re14='((?:[a-z][a-z]+))'  # Girl Name 2
-
-    rg = re.compile(re1+re2+re3+re4+re5+re6+re7+re8+re9+re10+re11+re12+re13+re14,re.IGNORECASE|re.DOTALL)
-    m = rg.search(line)
-
-    #################
-    if year:
-      print year.group()
-    elif m:
-      rank = m.group(1)
-      boyName = m.group(2)
-      girlName = m.group(3)
-      print rank + " " + boyName + " " + girlName
-    #print line
   file.close()
   return
 
