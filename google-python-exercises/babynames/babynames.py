@@ -57,12 +57,15 @@ def isBabyNames(line):
 
   rg = re.compile(re1+re2+re3+re4+re5+re6+re7+re8+re9+re10+re11+re12+re13+re14,re.IGNORECASE|re.DOTALL)
   m = rg.search(txt)
+  rankList = []
   if m:
     rank=m.group(1)
     boyName=m.group(2)
     girlName=m.group(3)
-
-  return rank
+    rankList.append(rank)
+    rankList.append(boyName)
+    rankList.append(girlName)
+  return rankList
 
 
 
